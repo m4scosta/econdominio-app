@@ -24,6 +24,8 @@
 .*/Libraries/react-native/ReactNative.js
 .*/node_modules/jest-runtime/build/__tests__/.*
 
+# .*/node_modules/.*
+
 [include]
 
 [libs]
@@ -55,4 +57,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 unsafe.enable_getters_and_setters=true
 
 [version]
-^0.30.0
+^0.32.0
