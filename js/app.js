@@ -2,119 +2,95 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Image
+    StyleSheet,
+    View,
+    ScrollView,
+    Image
 } from 'react-native';
 import { Button } from 'react-native-material-design';
 import TextField from 'react-native-md-textinput';
-import { togglePush } from './actions';
+import { logout, login } from './actions';
 import { bindActionCreators } from 'redux';
 
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <Image
-              style={styles.logo}
-              source={ require('../assets/logo.png') } />
-
-          <TextField
-              dense={true}
-              label={'Name'}
-              highlightColor={'#00BCD4'} />
-
-          <TextField
-              dense={true}
-              label={'Email'}
-              highlightColor={'#00BCD4'} />
-
-          <Button
-              text={'Entrar'}
-              raised={true}
-              onPress={() => alert("Go to home screen")} />
-
-          <Button
-              text={'Cadastrar-se'}
-              onPress={() => alert("Go to signup screen")} />
-
-          <Button
-              text={'TOGGLE'}
-              raised={this.props.allowPush}
-              onPress={ () => this.props.dispatch(togglePush(false)) } />
-
-        </ScrollView>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <LoginScreen {...this.props} />
+        );
+    }
 }
 
 
-// class LoginScreen extends Component {
-//
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <ScrollView>
-//           <Image
-//               style={styles.logo}
-//               source={ require('../assets/logo.png') } />
-//
-//           <TextField
-//               dense={true}
-//               label={'Name'}
-//               highlightColor={'#00BCD4'} />
-//
-//           <TextField
-//               dense={true}
-//               label={'Email'}
-//               highlightColor={'#00BCD4'} />
-//
-//           <Button
-//               text={'Entrar'}
-//               raised={true}
-//               onPress={() => alert("Go to home screen")} />
-//
-//           <Button
-//               text={'Cadastrar-se'}
-//               onPress={() => alert("Go to signup screen")} />
-//
-//           <Button
-//               text={'TOGGLE'}
-//               raised={this.props.allowPush}
-//               onPress={() => this.props.dispatch(togglePush(!this.props.allowPush)) } />
-//         </ScrollView>
-//       </View>
-//     );
-//   }
-// }
+class LoginScreen extends Component {
+
+    render() {
+        var actionButton;
+        console.log(this);
+        if (!this.props.isLoggedIn) {
+            actionButton = (
+                <Button
+                    text={'ENTRAR'}
+                    raised={true}
+                    onPress={() => this.props.login() } />
+            );
+        } else {
+            actionButton = (
+                <Button
+                    text={'CADASTRAR-SE'}
+                    onPress={ () => this.props.logout() } />
+            );
+        }
+        return (
+            <View style={styles.container}>
+                <ScrollView>
+                    <Image
+                        style={styles.logo}
+                        source={ require('../assets/logo.png') } />
+
+                    <TextField
+                        dense={true}
+                        label={'Name'}
+                        highlightColor={'#00BCD4'} />
+
+                    <TextField
+                        dense={true}
+                        label={'Email'}
+                        highlightColor={'#00BCD4'} />
+                    {actionButton}
+                </ScrollView>
+            </View>
+        );
+    }
+}
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
-    padding: 20
-  },
-  logo: {
-    alignSelf: 'center'
-  }
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: '#F5FCFF',
+        padding: 20
+    },
+    logo: {
+        alignSelf: 'center'
+    }
 });
 
 
 function mapStateToProps(state) {
-  return {
-    allowPush: state.allowPush
-  };
+    return {
+        isLoggedIn: state.user.isLoggedIn
+    }
 }
 
-export const AppContainer = connect(mapStateToProps, null, null, { pure: false })(App);
+
+function mapDispatchToProps(dispatch) {
+    return {
+        logout: () => dispatch(logout()),
+        login: () => dispatch(login())
+    }
+}
+
+export const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);

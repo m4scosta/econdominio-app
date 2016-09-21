@@ -3,10 +3,8 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { AppContainer } from './app';
 import configureStore from './store/configureStore';
-import loadConfig from './actions'
 
 const store = configureStore();
-store.dispatch(loadConfig());
 
 function setup() {
 
