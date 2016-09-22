@@ -2,26 +2,44 @@
 import type { Action } from '../actions/types';
 
 export type State = {
-    isLoggedIn: boolean;
+  isLoggedIn: boolean;
+  loginFaile: boolean;
+  id: ?string;
+  username: ?string;
 };
 
 const initialState = {
-    isLoggedIn: false
+  isLoggedIn: false,
+  id: null,
+  username: null
 };
 
 function user(state: State = initialState, action: Action): State {
-    console.log('asd', state, action);
-    if (action.type === 'LOGGED_IN') {
-        return {
-            isLoggedIn: true
-        }
+  if (action.type === 'LOGGED_IN') {
+    return {
+      isLoggedIn: true,
+      loginFailed: false,
+      id: action.data.id,
+      username: action.data.username
     }
-    if (action.type === 'LOGGED_OUT') {
-        return {
-            isLoggedIn: false
-        }
+  }
+  if (action.type === 'LOGIN_FAILED') {
+    return {
+      isLoggedIn: false,
+      loginFailed: true,
+      id: null,
+      username: null
     }
-    return state;
+  }
+  if (action.type === 'LOGGED_OUT') {
+    return {
+      isLoggedIn: false,
+      loginFailed: false,
+      id: null,
+      username: null
+    }
+  }
+  return state;
 }
 
 export default user;

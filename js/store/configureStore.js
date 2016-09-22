@@ -1,9 +1,16 @@
 // @flow
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
+import { AsyncStorage } from 'react-native';
+import thunk from 'redux-thunk';
 import reducers from '../reducers';
 
-function configureStore() {
-    return createStore(reducers);
+var createAppStore = applyMiddleware(thunk)(createStore);
+
+function configureStore(onComplete: ?() => void) {
+  const store = autoRehydrate()(createAppStore)(reducers);
+  persistStore(store, { storage: AsyncStorage }, onComplete);
+  return store;
 }
 
 export default configureStore;
