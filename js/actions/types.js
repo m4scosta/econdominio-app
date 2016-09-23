@@ -1,7 +1,6 @@
 // @flow
 export type Action =
     { type: 'LOGGED_OUT' },
-  | { type: 'LOGIN_FAILED' },
   | { type: 'LOGGED_IN', data: { id: string; username: string; } }
   ;
 

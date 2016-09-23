@@ -1,10 +1,9 @@
 // @flow
 import Parse from 'parse/react-native';
-import { Alert } from 'react-native';
 import type { Action, ThunkAction } from './types';
 
 
-async function ParseUsernamePasswordLogin(username, password): Promise {
+function ParseUsernamePasswordLogin(username, password): Promise {
   return new Promise((resolve, reject) => {
     Parse.User.logIn(username, password, {
       success: resolve,
@@ -37,11 +36,5 @@ export function logout(): Action {
 	Parse.User.logOut();
 	return {
 		type: 'LOGGED_OUT'
-	}
-}
-
-export function loginFailed(): Action {
-	return {
-		type: 'LOGIN_FAILED'
 	}
 }
