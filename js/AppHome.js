@@ -5,7 +5,9 @@ import { View, ScrollView, StyleSheet, Image, Text } from 'react-native';
 import DrawerLayout from './common/DrawerLayout';
 import MenuItem from './common/MenuItem';
 import Divider from './common/Divider';
+import GravatarImage from './common/GravatarImage';
 import NotificationsView from './notifications/NotificationsView';
+import { logout } from './actions';
 
 
 class AppHome extends React.Component {
@@ -36,7 +38,15 @@ class AppHome extends React.Component {
   renderNavigationView() {
     return (
       <View style={styles.container}>
-        <Image source={require('../assets/background.jpg')} />
+        <Image source={require('../assets/background.jpg')} style={{padding: 20}}>
+          <GravatarImage
+            email={this.props.username}
+            style={{width: 70, height: 70, borderRadius: 35, marginTop: 80, borderWidth: 2, borderColor: 'white'}} />
+          <Text style={{ marginTop: 5, fontSize: 15, color: 'white' }}>
+            {this.props.username}
+          </Text>
+        </Image>
+
         <MenuItem
           iconName='bell'
           text='Notificações'
@@ -60,7 +70,7 @@ class AppHome extends React.Component {
         <MenuItem
           iconName='sign-out'
           text='Sair'
-          onPress={this.onMenuItemSelected.bind(this, 'logout')}
+          onPress={() => this.props.logout()}
           />
       </View>
     );
@@ -111,11 +121,17 @@ const styles = StyleSheet.create({
   }
 });
 
-// FixMe: add this function on connect()
 function mapStateToProps(state) {
   return {
-    notifications: state.notifications
+    notifications: state.notifications,
+    username: state.user.username,
   };
 }
 
-export default connect()(AppHome);
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: () => dispatch(logout()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppHome);
