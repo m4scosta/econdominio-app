@@ -1,7 +1,10 @@
 // @flow
+type ParseObject = Object;
+
 export type Action =
     { type: 'LOGGED_OUT' },
-  | { type: 'LOGGED_IN', data: { id: string; username: string; } }
+  | { type: 'LOGGED_IN', data: { id: string; username: string; } },
+  | { type: 'NOTIFICATIONS_LOADED', notifications: ParseObject }
   ;
 
 
