@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, ListView, Image, Text } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  ListView,
+  Image,
+  Text
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ToolbarAndroid from 'ToolbarAndroid';
 import * as Animatable from 'react-native-animatable';
 import NotificationsSectionHeader from './NotificationsSectionHeader';
 import { formatDate, formatTime } from './datetimeFormats';
@@ -61,24 +67,23 @@ class NotificationsView extends React.Component {
 
   render() {
     return (
-      <Image
-        source={require('../../assets/bg.png')}
-        style={[styles.container, styles.bg]}>
-
-        <Icon.ToolbarAndroid
-          navIconName='bars'
-          style={styles.toolbar}
-          onIconClicked={() => this.context.openDrawer()}
-          title="Notificações" />
+      <View style={styles.container}>
+      <Icon.ToolbarAndroid
+        navIconName='bars'
+        style={styles.toolbar}
+        onIconClicked={() => this.context.openDrawer()}
+        title='Notificações' />
 
         <Animatable.View animation='fadeIn' duration={300} style={styles.container}>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={this.renderRow}
-            renderSectionHeader={this.renderSectionHeader}
-            renderSeparator={(sectionID, rowID) => <View style={styles.separator} key={rowID} />} />
+          <ScrollView>
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow}
+              renderSectionHeader={this.renderSectionHeader}
+              renderSeparator={(sectionID, rowID) => <View style={styles.separator} key={rowID} />} />
+          </ScrollView>
         </Animatable.View>
-      </Image>
+      </View>
     );
   }
 
@@ -133,32 +138,25 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  bg: {
-    width: null,
-    height: null,
-    alignSelf: 'stretch',
-  },
-  toolbar: {
-    backgroundColor: 'gray',
-    height: 56,
-  },
   separator: {
     backgroundColor: '#eeeeee',
     height: 1,
   },
   listItemIcon: {
     marginRight: 15,
-    color: 'blue',
     alignSelf: 'center',
     width: 20,
     height: 20,
-    alignItems: 'center',
   },
   listRowContainer: {
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
     padding: 15,
+  },
+  toolbar: {
+    backgroundColor: 'lightgray',
+    height: 56,
   },
 });
 

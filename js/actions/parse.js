@@ -4,6 +4,7 @@ import Parse from 'parse/react-native';
 import type { ThunkAction } from './types';
 
 const Notification = Parse.Object.extend('Notification');
+const Visitor = Parse.Object.extend('Visitor');
 
 function loadParseQuery(query: Parse.Query): ThunkAction {
   return new Promise(function (resolve, reject) {
@@ -38,4 +39,24 @@ function loadNotifications() {
   }
 }
 
-export { loadNotifications };
+function buildVisitorsQuery(user) {
+  const query = new Parse.Query(Visitor);
+  query.equalTo('residence', user.get('residence'));
+  query.descending('createdAt');
+  return query;
+}
+
+function loadVisitors() {
+  const type = 'LOADED_VISITORS';
+
+  return (dispatch) => {
+    Parse.User.currentAsync()
+      .then(buildVisitorsQuery)
+      .then(loadParseQuery)
+      .then((results) => {
+        InteractionManager.runAfterInteractions(() => dispatch({type, results}));
+      });
+  }
+}
+
+export { loadNotifications, loadVisitors };

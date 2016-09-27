@@ -2,9 +2,10 @@
 type ParseObject = Object;
 
 export type Action =
-    { type: 'LOGGED_OUT' },
-  | { type: 'LOGGED_IN', data: { id: string; username: string; } },
-  | { type: 'NOTIFICATIONS_LOADED', notifications: ParseObject }
+    { type: 'LOGGED_OUT' }
+  | { type: 'LOGGED_IN', data: { id: string; username: string; } }
+  | { type: 'LOADED_NOTIFICATIONS', notifications: Array<ParseObject> }
+  | { type: 'LOADED_VISITORS', visitors: Array<ParseObject> }
   ;
 
 

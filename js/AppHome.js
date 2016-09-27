@@ -7,6 +7,10 @@ import MenuItem from './common/MenuItem';
 import Divider from './common/Divider';
 import GravatarImage from './common/GravatarImage';
 import NotificationsView from './notifications/NotificationsView';
+import VisitorsListingView from './visitors/VisitorsListingView';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ToolbarAndroid from 'ToolbarAndroid';
+import * as Animatable from 'react-native-animatable';
 import { logout } from './actions';
 
 
@@ -19,6 +23,7 @@ class AppHome extends React.Component {
     }
     this.renderNavigationView = this.renderNavigationView.bind(this);
     this.openDrawer = this.openDrawer.bind(this);
+    this.renderContent = this.renderContent.bind(this);
   }
 
   render() {
@@ -29,7 +34,11 @@ class AppHome extends React.Component {
         drawerPosition='left'
         renderNavigationView={this.renderNavigationView}>
         <View style={styles.content}>
-          {this.renderContent()}
+          <Image
+            source={require('../assets/bg.png')}
+            style={[styles.container, styles.bg]}>
+            {this.renderContent()}
+          </Image>
         </View>
       </DrawerLayout>
     );
@@ -76,8 +85,8 @@ class AppHome extends React.Component {
     );
   }
 
-  onMenuItemSelected(viewName) {
-    this.setState({selectedView: viewName});
+  onMenuItemSelected(selectedView) {
+    this.setState({selectedView});
     this.refs.drawer.closeDrawer();
   }
 
@@ -88,6 +97,13 @@ class AppHome extends React.Component {
         <NotificationsView />
       );
     }
+
+    if (selectedView === 'visitors') {
+      return (
+        <VisitorsListingView navigator={this.props.navigator} />
+      );
+    }
+
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -118,6 +134,11 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  bg: {
+    width: null,
+    height: null,
+    alignSelf: 'stretch',
   }
 });
 

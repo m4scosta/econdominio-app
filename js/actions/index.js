@@ -1,3 +1,4 @@
 // @flow
 export * from './login';
-export * from './parse.js';
+export * from './parse';
+export * from './visitors';

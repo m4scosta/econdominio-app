@@ -9,6 +9,7 @@ import {
   Text
 } from 'react-native';
 import AppHome from './AppHome';
+import AddOrEditVisitor from './visitors/AddOrEditVisitor';
 
 
 class AppNavigator extends Component {
@@ -83,20 +84,18 @@ class AppNavigator extends Component {
   }
 
   renderScene(route, navigator) {
-    if (route.visitors) {
+    if (route.addOrEditVisitor) {
       return (
-        <Text>VISITORS - NOT IMPLEMENTED YET</Text>
+        <AddOrEditVisitor navigator={navigator} {...route} />
       );
     }
 
-    if (route.events) {
-      return (
-        <Text>EVENTS - NOT IMPLEMENTED YET</Text>
-      );
-    }
+    // return (
+    //   <AddOrEditVisitor navigator={navigator} {...route} />
+    // );
 
     return (
-      <AppHome />
+      <AppHome navigator={navigator} />
     );
   }
 }
