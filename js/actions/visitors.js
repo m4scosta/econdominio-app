@@ -36,4 +36,19 @@ function saveVisitor(name, rg, base64Photo): ThunkAction {
 }
 
 
-export { saveVisitor };
+function deleteVisitor(visitorId) {
+  return (dispatch) => {
+    var q = new Parse.Query(Visitor);
+    return q.get(visitorId)
+      .then((visitor) => visitor.destroy())
+      .then(() => dispatch(loadVisitors()));
+  }
+}
+
+function toParseObject(visitor) {
+  const parseObj = new Visitor();
+  parseObj.id = visitor.id;
+}
+
+
+export { saveVisitor, deleteVisitor };

@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Image, ListView, StyleSheet } from 'react-native';
-import { loadVisitors } from '../actions';
+import {
+  View,
+  ScrollView,
+  ListView,
+  StyleSheet,
+  Text,
+  Image,
+} from 'react-native';
+import { loadVisitors, deleteVisitor } from '../actions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
+import Spinner from 'react-native-loading-spinner-overlay';
+import ToastAndroid from 'ToastAndroid';
 
 
 class VisitorsListingView extends Component {
@@ -13,6 +22,7 @@ class VisitorsListingView extends Component {
     var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: dataSource.cloneWithRows(this.props.visitors),
+      loading: false,
     }
     this.renderRow = this.renderRow.bind(this);
     this.onActionSelected = this.onActionSelected.bind(this);
@@ -32,7 +42,7 @@ class VisitorsListingView extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Icon.ToolbarAndroid
           navIconName='bars'
           style={styles.toolbar}
@@ -42,13 +52,15 @@ class VisitorsListingView extends Component {
           title='Visitantes' />
 
         <Animatable.View animation='fadeIn' duration={300} style={styles.container}>
-          <View style={styles.container}>
+          <ScrollView>
             <ListView
               dataSource={this.state.dataSource}
               renderRow={this.renderRow}
               renderSeparator={(sectionID, rowID) => <View style={styles.separator} key={rowID} />} />
-          </View>
+          </ScrollView>
         </Animatable.View>
+
+        <Spinner visible={this.state.loading} />
       </View>
     );
   }
@@ -61,8 +73,28 @@ class VisitorsListingView extends Component {
           <Text>{rowData.name}</Text>
           <Text style={{fontSize: 12}}>{rowData.rg}</Text>
         </View>
+        <View style={{flex: 1, alignItems: 'flex-end', paddingTop: 15}}>
+          <Icon
+            name='trash'
+            size={20}
+            color='indianred'
+            onPress={this.handleDeletePress.bind(this, rowData.id)}/>
+        </View>
       </View>
     );
+  }
+
+  handleDeletePress(visitorId) {
+    this.setState({loading: true});
+    this.props.deleteVisitor(visitorId)
+      .then(() => {
+        ToastAndroid.show('Apagado', ToastAndroid.SHORT)
+        this.setState({loading: false});
+      })
+      .catch(() => {
+        alert('Não foi possível apagar o visitante, verifique sua conexão com a internet e tente novamente.');
+        this.setState({loading: false});
+      });
   }
 
   onActionSelected(actionIndex) {
@@ -123,6 +155,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     loadVisitors: () => dispatch(loadVisitors()),
+    deleteVisitor: (visitorId) => dispatch(deleteVisitor(visitorId))
   };
 }
 

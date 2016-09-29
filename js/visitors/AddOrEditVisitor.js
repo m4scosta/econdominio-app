@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImageInput from './ImageInput';
+import Spinner from 'react-native-loading-spinner-overlay';
+import ToastAndroid from 'ToastAndroid';
 import { saveVisitor } from '../actions';
 
 
@@ -23,7 +25,7 @@ class AddOrEditVisitor extends Component {
   }
 
   render() {
-    var title, photo, button;
+    var form, title;
     if (this.props.visitor) {
       title = 'Editar Visitante';
     } else {
@@ -39,21 +41,22 @@ class AddOrEditVisitor extends Component {
           onActionSelected={this.onActionSelected}
           title={title} />
 
-        <View style={styles.formContainer}>
+          <View style={styles.formContainer}>
+            <TextInput
+              ref='rg'
+              placeholder='Nome'
+              onChangeText={(name) => this.setState({name})} />
 
-          <TextInput
-            ref='rg'
-            placeholder='Nome'
-            onChangeText={(name) => this.setState({name})} />
+            <TextInput
+              ref='rg'
+              placeholder='Nº da Carteira de Identidade'
+              onChangeText={(rg) => this.setState({rg})} />
 
-          <TextInput
-            ref='rg'
-            placeholder='Nº da Carteira de Identidade'
-            onChangeText={(rg) => this.setState({rg})} />
+            <ImageInput
+              onChangeImage={(photo) => this.setState({photo})} />
+          </View>
 
-          <ImageInput
-            onChangeImage={(photo) => this.setState({photo})} />
-        </View>
+        <Spinner visible={this.state.saving} />
       </View>
     );
   }
@@ -61,17 +64,25 @@ class AddOrEditVisitor extends Component {
   onActionSelected(actionIndex) {
     if (actionIndex === 0) { // save
       if (this.validateVisitor()) {
+        this.setState({saving: true});
+
         const { name, rg, photo } = this.state;
         this.props.saveVisitor(name, rg, photo)
-          .then(() => this.props.navigator.pop())
-          .catch(() => alert('Erro ao salvar, tente novamente.'));
+          .then(() => {
+            ToastAndroid.show('Salvo', ToastAndroid.SHORT);
+            this.props.navigator.pop();
+          })
+          .catch(() => {
+            alert('Erro ao salvar, tente novamente.');
+            this.setState({saving: false})
+          })
       }
     }
   }
 
   validateVisitor() {
     if (!this.state.name) {
-      alert('Nome obrigatório');
+      alert('Nome obrigatório'); // TODO: replace alerts
       return false;
     }
     if (!this.state.rg) {

@@ -16,6 +16,7 @@
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-image-picker": "^0.22.8",
     "react-native-linear-gradient": "^1.5.13",
+    "react-native-loading-spinner-overlay": "^0.3.0",
     "react-native-material-design": "^0.3.7",
     "react-native-md-textinput": "^2.0.4",
     "react-native-spinkit": "^0.1.3",
