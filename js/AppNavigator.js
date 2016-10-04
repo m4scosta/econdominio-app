@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import AppHome from './AppHome';
 import AddOrEditVisitor from './visitors/AddOrEditVisitor';
+import AddOccurrence from './occurrences/AddOccurrence';
+import OccurrenceDetailView from './occurrences/OccurrenceDetailView';
 
 
 class AppNavigator extends Component {
@@ -90,9 +92,17 @@ class AppNavigator extends Component {
       );
     }
 
-    // return (
-    //   <AddOrEditVisitor navigator={navigator} {...route} />
-    // );
+    if (route.addOccurrence) {
+      return (
+        <AddOccurrence navigator={navigator} {...route} />
+      );
+    }
+
+    if (route.occurrenceDetail) {
+      return (
+        <OccurrenceDetailView navigator={navigator} {...route} />
+      );
+    }
 
     return (
       <AppHome navigator={navigator} />

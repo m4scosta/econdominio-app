@@ -8,6 +8,7 @@ import Divider from './common/Divider';
 import GravatarImage from './common/GravatarImage';
 import NotificationsView from './notifications/NotificationsView';
 import VisitorsListingView from './visitors/VisitorsListingView';
+import OccurrencesListingView from './occurrences/OccurrencesListingView';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ToolbarAndroid from 'ToolbarAndroid';
 import * as Animatable from 'react-native-animatable';
@@ -92,6 +93,7 @@ class AppHome extends React.Component {
 
   renderContent() {
     const { selectedView } = this.state;
+
     if (!selectedView || selectedView === 'home') {
       return (
         <NotificationsView />
@@ -104,13 +106,11 @@ class AppHome extends React.Component {
       );
     }
 
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <Text>{this.state.selectedView}</Text>
-        </ScrollView>
-      </View>
-    );
+    if (selectedView === 'events') {
+      return (
+        <OccurrencesListingView navigator={this.props.navigator} />
+      );
+    }
   }
 
   getChildContext() {

@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    padding: 15,
+    padding: 10,
   },
   toolbar: {
     backgroundColor: 'lightgray',
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    visitors: state.visitors || [{ name: 'test', rg: '123456' }],
+    visitors: state.visitors,
     username: state.user.username,
   };
 }

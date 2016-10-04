@@ -5,6 +5,7 @@ import type { ThunkAction } from './types';
 
 const Notification = Parse.Object.extend('Notification');
 const Visitor = Parse.Object.extend('Visitor');
+const Occurrence = Parse.Object.extend('Occurrence');
 
 function loadParseQuery(query: Parse.Query): ThunkAction {
   return new Promise(function (resolve, reject) {
@@ -39,19 +40,18 @@ function loadNotifications() {
   }
 }
 
-function buildVisitorsQuery(user) {
-  const query = new Parse.Query(Visitor);
-  query.equalTo('residence', user.get('residence'));
-  query.descending('createdAt');
-  return query;
-}
 
 function loadVisitors() {
   const type = 'LOADED_VISITORS';
+  const query = new Parse.Query(Visitor);
+  query.descending('createdAt');
 
   return (dispatch) => {
     Parse.User.currentAsync()
-      .then(buildVisitorsQuery)
+      .then((user) => {
+        query.equalTo('residence', user.get('residence'));
+        return query;
+      })
       .then(loadParseQuery)
       .then((results) => {
         InteractionManager.runAfterInteractions(() => dispatch({type, results}));
@@ -59,4 +59,24 @@ function loadVisitors() {
   }
 }
 
-export { loadNotifications, loadVisitors };
+
+function loadOccurrences() {
+  const type = 'LOADED_OCCURRENCES';
+  const query = new Parse.Query(Occurrence);
+  query.descending('createdAt');
+
+  return (dispatch) => {
+    Parse.User.currentAsync()
+      .then((user) => {
+        query.equalTo('residence', user.get('residence'));
+        return query;
+      })
+      .then(loadParseQuery)
+      .then((results) => {
+        InteractionManager.runAfterInteractions(() => dispatch({type, results}));
+      });
+  }
+}
+
+
+export { loadNotifications, loadVisitors, loadOccurrences };
