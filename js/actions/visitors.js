@@ -45,10 +45,5 @@ function deleteVisitor(visitorId) {
   }
 }
 
-function toParseObject(visitor) {
-  const parseObj = new Visitor();
-  parseObj.id = visitor.id;
-}
-
 
 export { saveVisitor, deleteVisitor };

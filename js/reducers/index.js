@@ -3,12 +3,14 @@ import { combineReducers } from 'redux';
 import user from './user';
 import notifications from './notifications';
 import visitors from './visitors';
+import occurrences from './occurrences'
 
 
 const appReducer = combineReducers({
   user: user,
   notifications: notifications,
   visitors: visitors,
+  occurrences: occurrences,
 });
 
 

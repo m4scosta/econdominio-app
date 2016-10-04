@@ -7,6 +7,7 @@ export type Action =
   | { type: 'LOADED_NOTIFICATIONS', notifications: Array<ParseObject> }
   | { type: 'LOADED_VISITORS', visitors: Array<ParseObject> }
   | { type: 'RECEIVED_TOKEN', token: String }
+  | { type: 'LOADED_OCCURRENCES', occurrences: Array<ParseObject> }
   ;
 
 
