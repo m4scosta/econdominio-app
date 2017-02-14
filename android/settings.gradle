@@ -1,4 +1,4 @@
-rootProject.name = 'ReactTest'
+rootProject.name = 'econdominio'
 
 include ':app'
 include ':react-native-image-picker'

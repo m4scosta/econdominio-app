@@ -1,4 +1,4 @@
-package com.reacttest;
+package br.com.econdominio;
 
 import com.facebook.react.ReactActivity;
 import com.imagepicker.ImagePickerPackage;
@@ -13,6 +13,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "ReactTest";
+        return "econdominio";
     }
 }
