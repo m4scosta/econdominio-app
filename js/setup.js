@@ -16,10 +16,12 @@ function setup() {
   Parse.serverURL = PARSE_SERVER_URL;
   Parse.initialize(PARSE_APP_ID, PARSE_JAVASCRIPT_KEY);
 
+
   class Root extends Component {
 
     state: {
       isLoading: boolean;
+      store: any;
     }
 
     constructor(props) {

@@ -14,27 +14,26 @@ function ParseUsernamePasswordLogin(username, password): Promise {
 
 
 export function login(username: String, password: String): ThunkAction {
-	return (dispatch) => {
-		const login = ParseUsernamePasswordLogin(username, password);
-
-		login.then((user) => {
-			const action = {
-				type: 'LOGGED_IN',
-				data: {
-					id: user.id,
-					username: user.get('username')
-				}
-			}
-			dispatch(action);
-		});
-
-		return login;
-	}
+  return (dispatch) => {
+    const login = ParseUsernamePasswordLogin(username, password);
+    login.then((user) => {
+      const action = {
+        type: 'LOGGED_IN',
+        data: {
+        id: user.id,
+        username: user.get('username')
+        }
+      }
+        dispatch(action);
+    });
+    return login;
+  }
 }
 
+
 export function logout(): Action {
-	Parse.User.logOut();
-	return {
-		type: 'LOGGED_OUT'
-	}
+  Parse.User.logOut();
+  return {
+    type: 'LOGGED_OUT'
+  }
 }
