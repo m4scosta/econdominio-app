@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   Image,
+  TouchableHighlight,
 } from 'react-native';
 import TouchableWithoutFeedback from 'TouchableWithoutFeedback';
 import { loadOccurrences, deleteOccurrence } from '../actions';
@@ -16,6 +17,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import ToastAndroid from 'ToastAndroid';
 import StatusBadge from './StatusBadge';
 import OccurrenceTypeLabel from './OccurrenceTypeLabel';
+import Toolbar from '../common/Toolbar';
 
 
 class OccurrencesListingView extends Component {
@@ -51,10 +53,7 @@ class OccurrencesListingView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Icon.ToolbarAndroid
-          navIconName='bars'
-          style={styles.toolbar}
-          onIconClicked={() => this.context.openDrawer()}
+        <Toolbar
           actions={[{'title': 'Novo', iconName: 'plus', show: 'always'}]}
           onActionSelected={this.onActionSelected}
           title='Ocorrências' />
@@ -77,7 +76,7 @@ class OccurrencesListingView extends Component {
     const icon = this.renderRowIcon(rowData);
 
     return (
-      <TouchableWithoutFeedback onPress={() => this.props.navigator.push({occurrenceDetail: true, occurrence: rowData})}>
+      <TouchableHighlight onPress={() => this.props.navigator.push({occurrenceDetail: true, occurrence: rowData})}>
         <View style={styles.rowContainer}>
           {icon}
           <View style={{flex: 2, alignSelf: 'stretch'}}>
@@ -88,7 +87,7 @@ class OccurrencesListingView extends Component {
             <StatusBadge status={rowData.status} />
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableHighlight>
     );
   }
 

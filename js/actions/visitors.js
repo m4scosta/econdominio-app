@@ -1,6 +1,6 @@
 // @flow
 import Parse from 'parse/react-native';
-import type { Action, ThunkAction } from './types';
+import type { Action, Dispatch, ThunkAction } from './types';
 import { loadVisitors } from './parse';
 
 
@@ -20,13 +20,13 @@ function createVisitor(name, rg, photo) {
 }
 
 
-function saveBase64File(base64): Promise {
+function saveBase64File(base64): Promise<*> {
   const file = new Parse.File('test.png', {base64});
   return file.save();
 }
 
 
-function saveVisitor(name, rg, base64Photo): ThunkAction {
+function saveVisitor(name: String, rg: String, base64Photo: String): ThunkAction {
   return (dispatch) => {
     return saveBase64File(base64Photo)
       .then((photo) => createVisitor(name, rg, photo))
@@ -36,8 +36,8 @@ function saveVisitor(name, rg, base64Photo): ThunkAction {
 }
 
 
-function deleteVisitor(visitorId) {
-  return (dispatch) => {
+function deleteVisitor(visitorId: number) {
+  return (dispatch: Dispatch) => {
     var q = new Parse.Query(Visitor);
     return q.get(visitorId)
       .then((visitor) => visitor.destroy())

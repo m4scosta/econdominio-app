@@ -1,4 +1,6 @@
 // @flow
+import type { Action } from '../actions/types';
+
 type Occurrence = {
   id: string;
   createdAt: number;
@@ -13,7 +15,7 @@ const initialState = [];
 
 function notifications(state: State = initialState, action: Action): State {
   if (action.type === 'LOADED_OCCURRENCES') {
-    return action.results.map(fromParseObject);
+    return action.occurrences.map(fromParseObject);
   }
   return state;
 }

@@ -10,6 +10,7 @@ import ImageInput from './ImageInput';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ToastAndroid from 'ToastAndroid';
 import { saveVisitor } from '../actions';
+import Toolbar from '../common/Toolbar';
 
 
 class AddOrEditVisitor extends Component {
@@ -33,9 +34,8 @@ class AddOrEditVisitor extends Component {
     }
     return (
       <View style={styles.container}>
-        <Icon.ToolbarAndroid
+        <Toolbar
           navIconName='arrow-left'
-          style={styles.toolbar}
           onIconClicked={() => this.props.navigator.pop()}
           actions={[{title: 'SALVAR', show: 'always'}]}
           onActionSelected={this.onActionSelected}

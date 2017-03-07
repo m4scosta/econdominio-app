@@ -3,7 +3,7 @@ import type { Action } from '../actions/types';
 
 export type State = {
   isLoggedIn: boolean;
-  loginFaile: boolean;
+  loginFailed: boolean;
   id: ?string;
   username: ?string;
 };
@@ -11,7 +11,8 @@ export type State = {
 const initialState = {
   isLoggedIn: false,
   id: null,
-  username: null
+  username: null,
+  loginFailed: false,
 };
 
 function user(state: State = initialState, action: Action): State {

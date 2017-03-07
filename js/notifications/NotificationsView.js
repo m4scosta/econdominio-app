@@ -13,6 +13,7 @@ import * as Animatable from 'react-native-animatable';
 import NotificationsSectionHeader from './NotificationsSectionHeader';
 import { formatDate, formatTime } from './datetimeFormats';
 import { loadNotifications } from '../actions';
+import Toolbar from '../common/Toolbar';
 
 
 function groupNotificationsByDay(notifications) {
@@ -68,12 +69,7 @@ class NotificationsView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      <Icon.ToolbarAndroid
-        navIconName='bars'
-        style={styles.toolbar}
-        onIconClicked={() => this.context.openDrawer()}
-        title='Notificações' />
-
+        <Toolbar title='Notificações' />
         <Animatable.View animation='fadeIn' duration={300} style={styles.container}>
           <ScrollView>
             <ListView

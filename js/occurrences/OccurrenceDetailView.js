@@ -7,9 +7,9 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import StatusBadge from './StatusBadge';
 import OccurrenceTypeLabel from './OccurrenceTypeLabel';
+import Toolbar from '../common/Toolbar';
 
 
 class OccurrenceDetailView extends Component {
@@ -22,13 +22,12 @@ class OccurrenceDetailView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Icon.ToolbarAndroid
+        <Toolbar
           navIconName='arrow-left'
-          style={styles.toolbar}
           onIconClicked={() => this.props.navigator.pop()}
           actions={[{title: 'EDITAR', show: 'always'}]}
           onActionSelected={(idx) => this.onActionSelected(idx)}
-          title={'Detalhes da Ocorrência'} />
+          title='Detalhes da Ocorrência' />
 
           {this.renderContent()}
 

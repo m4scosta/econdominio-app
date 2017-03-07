@@ -24,7 +24,7 @@ function setup() {
       store: any;
     }
 
-    constructor(props) {
+    constructor(props: any) {
       super(props);
       this.state = {
         isLoading: true,

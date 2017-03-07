@@ -1,13 +1,13 @@
 // @flow
 import InteractionManager from 'InteractionManager';
 import Parse from 'parse/react-native';
-import type { ThunkAction } from './types';
+import type { Dispatch, ThunkAction } from './types';
 
 const Notification = Parse.Object.extend('Notification');
 const Visitor = Parse.Object.extend('Visitor');
 const Occurrence = Parse.Object.extend('Occurrence');
 
-function loadParseQuery(query: Parse.Query): ThunkAction {
+function loadParseQuery(query: Parse.Query) {
   return new Promise(function (resolve, reject) {
     query.find({ success: resolve, error: reject });
   });
@@ -30,12 +30,14 @@ function buildNotificationsQuery(user) {
 function loadNotifications() {
   const type = 'LOADED_NOTIFICATIONS';
 
-  return (dispatch) => {
+  return (dispatch: Dispatch) => {
     Parse.User.currentAsync()
       .then(buildNotificationsQuery)
       .then(loadParseQuery)
       .then((results) => {
-        InteractionManager.runAfterInteractions(() => dispatch({type, results}));
+        InteractionManager.runAfterInteractions(() => dispatch({
+          type, notifications: results
+        }));
       });
   }
 }
@@ -46,7 +48,7 @@ function loadVisitors() {
   const query = new Parse.Query(Visitor);
   query.descending('createdAt');
 
-  return (dispatch) => {
+  return (dispatch: Dispatch) => {
     Parse.User.currentAsync()
       .then((user) => {
         query.equalTo('residence', user.get('residence'));
@@ -54,7 +56,10 @@ function loadVisitors() {
       })
       .then(loadParseQuery)
       .then((results) => {
-        InteractionManager.runAfterInteractions(() => dispatch({type, results}));
+        InteractionManager.runAfterInteractions(() => dispatch({
+          type,
+          visitors: results
+        }));
       });
   }
 }
@@ -65,7 +70,7 @@ function loadOccurrences() {
   const query = new Parse.Query(Occurrence);
   query.descending('createdAt');
 
-  return (dispatch) => {
+  return (dispatch: Dispatch) => {
     Parse.User.currentAsync()
       .then((user) => {
         query.equalTo('residence', user.get('residence'));
@@ -73,7 +78,9 @@ function loadOccurrences() {
       })
       .then(loadParseQuery)
       .then((results) => {
-        InteractionManager.runAfterInteractions(() => dispatch({type, results}));
+        InteractionManager.runAfterInteractions(() => {
+          dispatch({type, occurrences: results})
+        });
       });
   }
 }

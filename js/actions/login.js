@@ -3,7 +3,7 @@ import Parse from 'parse/react-native';
 import type { Action, ThunkAction } from './types';
 
 
-function ParseUsernamePasswordLogin(username, password): Promise {
+function ParseUsernamePasswordLogin(username, password): Promise<any> {
   return new Promise((resolve, reject) => {
     Parse.User.logIn(username, password, {
       success: resolve,
@@ -13,18 +13,18 @@ function ParseUsernamePasswordLogin(username, password): Promise {
 }
 
 
-export function login(username: String, password: String): ThunkAction {
+export function login(username: string, password: string): ThunkAction {
   return (dispatch) => {
     const login = ParseUsernamePasswordLogin(username, password);
     login.then((user) => {
       const action = {
         type: 'LOGGED_IN',
         data: {
-        id: user.id,
-        username: user.get('username')
+          id: user.id,
+          username: user.get('username')
         }
-      }
-        dispatch(action);
+      };
+      dispatch(action);
     });
     return login;
   }

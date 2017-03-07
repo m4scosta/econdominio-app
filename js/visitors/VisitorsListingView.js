@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ToastAndroid from 'ToastAndroid';
-
+import Toolbar from '../common/Toolbar';
 
 class VisitorsListingView extends Component {
 
@@ -43,10 +43,7 @@ class VisitorsListingView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Icon.ToolbarAndroid
-          navIconName='bars'
-          style={styles.toolbar}
-          onIconClicked={() => this.context.openDrawer()}
+        <Toolbar
           actions={[{'title': 'Novo', iconName: 'plus', show: 'always'}]}
           onActionSelected={this.onActionSelected}
           title='Visitantes' />

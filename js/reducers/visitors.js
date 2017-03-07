@@ -1,5 +1,5 @@
 // @flow
-import { Action } from '../actions';
+import type { Action } from '../actions/types';
 
 export type Visitor = {
   id: string;
@@ -15,7 +15,7 @@ const initialState = [];
 
 function visitors(state: State = initialState, action: Action): State {
   if (action.type === 'LOADED_VISITORS') {
-    return action.results.map(fromParseObject);
+    return action.visitors.map(fromParseObject);
   }
   return state;
 }
