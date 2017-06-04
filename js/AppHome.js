@@ -50,10 +50,10 @@ class AppHome extends React.Component {
       <View style={styles.container}>
         <Image source={require('../assets/background.jpg')} style={{padding: 20}}>
           <GravatarImage
-            email={this.props.username}
+            email={this.props.user.username}
             style={{width: 70, height: 70, borderRadius: 35, marginTop: 80, borderWidth: 2, borderColor: 'white'}} />
           <Text style={{ marginTop: 5, fontSize: 15, color: 'white' }}>
-            {this.props.username}
+            {this.props.user.username}
           </Text>
         </Image>
 
@@ -77,6 +77,8 @@ class AppHome extends React.Component {
 
         <Divider />
 
+        {this.renderSindicoMenuItems()}
+
         <MenuItem
           iconName='sign-out'
           text='Sair'
@@ -84,6 +86,26 @@ class AppHome extends React.Component {
           />
       </View>
     );
+  }
+
+  renderSindicoMenuItems() {
+    if (this.props.user.role === 'sindico') {
+      return (
+        <View>
+
+        <MenuItem
+          iconName='pencil-square-o'
+          text='Ocorrências'
+          onPress={this.onMenuItemSelected.bind(this, 'events')}
+          />
+
+        <Divider />
+
+        </View>
+      );
+    } else {
+      return null;
+    }
   }
 
   onMenuItemSelected(selectedView) {
@@ -145,7 +167,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
     notifications: state.notifications,
-    username: state.user.username,
+    user: state.user,
   };
 }
 

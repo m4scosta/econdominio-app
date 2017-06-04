@@ -42,7 +42,6 @@ function saveOccurrence(occurrence): ThunkAction {
     } else {
       query = createOccurrence(occurrence);
     }
-    console.log(query);
     return query
       .then((occurrence) => occurrence.save())
       .then(() => dispatch(loadOccurrences()));

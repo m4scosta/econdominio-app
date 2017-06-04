@@ -6,6 +6,7 @@ export type State = {
   loginFailed: boolean;
   id: ?string;
   username: ?string;
+  role: ?string;
 };
 
 const initialState = {
@@ -21,7 +22,8 @@ function user(state: State = initialState, action: Action): State {
       isLoggedIn: true,
       loginFailed: false,
       id: action.data.id,
-      username: action.data.username
+      username: action.data.username,
+      role: action.data.role
     }
   }
   if (action.type === 'LOGIN_FAILED') {
@@ -29,7 +31,8 @@ function user(state: State = initialState, action: Action): State {
       isLoggedIn: false,
       loginFailed: true,
       id: null,
-      username: null
+      username: null,
+      role: null
     }
   }
   if (action.type === 'LOGGED_OUT') {
@@ -37,7 +40,8 @@ function user(state: State = initialState, action: Action): State {
       isLoggedIn: false,
       loginFailed: false,
       id: null,
-      username: null
+      username: null,
+      role: null
     }
   }
   return state;

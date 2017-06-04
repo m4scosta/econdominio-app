@@ -21,12 +21,12 @@ function createVisitor(name, rg, photo) {
 
 
 function saveBase64File(base64): Promise<*> {
-  const file = new Parse.File('test.png', {base64});
+  const file = new Parse.File('test.png', { base64 });
   return file.save();
 }
 
 
-function saveVisitor(name: String, rg: String, base64Photo: String): ThunkAction {
+function saveVisitor(name: String, rg: String, base64Photo: String) {
   return (dispatch) => {
     return saveBase64File(base64Photo)
       .then((photo) => createVisitor(name, rg, photo))

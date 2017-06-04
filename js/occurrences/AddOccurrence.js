@@ -12,6 +12,7 @@ import ToastAndroid from 'ToastAndroid';
 import { saveOccurrence } from '../actions';
 import Toolbar from '../common/Toolbar';
 
+
 class AddOccurrence extends Component {
 
   constructor(props, context) {
@@ -74,7 +75,7 @@ class AddOccurrence extends Component {
   onActionSelected(actionIndex) {
     if (actionIndex === 0) { // save
       if (this.validateVisitor()) {
-        this.setState({ saving: true });
+        this.setState({saving: true});
         this.props.saveOccurrence({...this.state})
           .then(() => {
             ToastAndroid.show('Salvo', ToastAndroid.SHORT);
