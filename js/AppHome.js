@@ -77,8 +77,6 @@ class AppHome extends React.Component {
 
         <Divider />
 
-        {this.renderSindicoMenuItems()}
-
         <MenuItem
           iconName='sign-out'
           text='Sair'
@@ -86,26 +84,6 @@ class AppHome extends React.Component {
           />
       </View>
     );
-  }
-
-  renderSindicoMenuItems() {
-    if (this.props.user.role === 'sindico') {
-      return (
-        <View>
-
-        <MenuItem
-          iconName='pencil-square-o'
-          text='Ocorrências'
-          onPress={this.onMenuItemSelected.bind(this, 'events')}
-          />
-
-        <Divider />
-
-        </View>
-      );
-    } else {
-      return null;
-    }
   }
 
   onMenuItemSelected(selectedView) {
